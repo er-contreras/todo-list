@@ -1,8 +1,7 @@
-import { update } from 'lodash';
-import { arr } from './index.js';
+export default function dragAndDrop() {
+  const items = document.querySelectorAll('.dropZone');
 
-export function dragAndDrop() {
-  document.addEventListener('DOMContentLoaded', (event) => {
+  document.addEventListener('DOMContentLoaded', () => {
     let dragSrcEl;
 
     function handleDragStart(e) {
@@ -13,10 +12,10 @@ export function dragAndDrop() {
       e.dataTransfer.setData('text/html', this.innerHTML);
     }
 
-    function handleDragEnd(e) {
+    function handleDragEnd() {
       this.style.opacity = '1';
 
-      items.forEach(function (item) {
+      items.forEach((item) => {
         item.classList.remove('over');
       });
     }
@@ -29,11 +28,11 @@ export function dragAndDrop() {
       return false;
     }
 
-    function handleDragEnter(e) {
+    function handleDragEnter() {
       this.classList.add('over');
     }
 
-    function handleDragLeave(e) {
+    function handleDragLeave() {
       this.classList.remove('over');
     }
 
@@ -48,9 +47,7 @@ export function dragAndDrop() {
       return false;
     }
 
-    const items = document.querySelectorAll('.dropZone');
-
-    items.forEach(function (item) {
+    items.forEach((item) => {
       item.addEventListener('dragstart', handleDragStart, false);
       item.addEventListener('dragover', handleDragOver, false);
       item.addEventListener('dragenter', handleDragEnter, false);
