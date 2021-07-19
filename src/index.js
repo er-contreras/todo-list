@@ -28,7 +28,6 @@ export let arr = [
   },
 ];
 
-// const createList = () => {
   for (let i = 0; i < arr.length; i += 1) {
     const dropZone = document.createElement('div');
     const inputlabel = document.createElement('label');
@@ -59,18 +58,7 @@ export let arr = [
 
   placeholder.appendChild(listcontainer);
   placeholder.appendChild(clearAll);
-// }
 
-
-// Store arr in localstorage
-localStorage.setItem('arr', JSON.stringify(arr));
-// arr = JSON.parse(localStorage.getItem('arr'));
-
-// console.log(arr)
-
-// let allCheckBox = document.querySelectorAll('#inputCheck-${i}')
-
-// function checking() {
 arr.forEach((item, i) => {
   let inputsCheckbox = document.getElementById(`inputCheck-${i}`);
 
@@ -79,14 +67,7 @@ arr.forEach((item, i) => {
   }
 
 });
-// }
 
-
-
-
-// document.addEventListener('DOMContentLoaded', () => {
-  // createList()
   dragAndDrop();
   
   checkBoxes();
-// })
