@@ -1,23 +1,23 @@
-import { savingOnLocal, Task } from "./index.js";
-import checkBoxes from "./updates.js";
-
+import { savingOnLocal } from './store.js';
+import Task from './task.js';
+import checkBoxes from './updates.js';
 
 let dragSrcEl;
 
 const htmlLocalData = () => {
-  let arr = [];
+  const arr = [];
 
-  let listContainer = [...document.querySelector('#list-container').children];
+  const listContainer = [...document.querySelector('#list-container').children];
 
   listContainer.forEach((items, i) => {
-    let inputsContainer = items.querySelector('.inputs-labels-container');
-    let checkbox = inputsContainer.querySelector('.checkbox');
-    let newTask = new Task(inputsContainer.textContent, checkbox.checked, i);
+    const inputsContainer = items.querySelector('.inputs-labels-container');
+    const checkbox = inputsContainer.querySelector('.checkbox');
+    const newTask = new Task(inputsContainer.textContent, checkbox.checked, i);
     arr.push(newTask);
   });
 
   savingOnLocal(arr);
-}
+};
 
 const handleDragStart = (e) => {
   e.currentTarget.style.opacity = '0.4';
@@ -25,13 +25,13 @@ const handleDragStart = (e) => {
 
   e.dataTransfer.effectAllowed = 'move';
   e.dataTransfer.setData('text/html', e.currentTarget.innerHTML);
-}
+};
 
 const handleDragOver = (e) => {
   if (e.preventDefault) {
     e.preventDefault();
   }
-}
+};
 
 const handleDrop = (e) => {
   e.stopPropagation();
@@ -44,9 +44,9 @@ const handleDrop = (e) => {
 
   htmlLocalData();
   checkBoxes();
-}
+};
 
-export const dragAndDrop = () => {
+export default function dragAndDrop() {
   const items = document.querySelectorAll('.drop-zone');
 
   items.forEach((item) => {
@@ -54,5 +54,4 @@ export const dragAndDrop = () => {
     item.addEventListener('dragover', handleDragOver, false);
     item.addEventListener('drop', handleDrop, false);
   });
-
 }

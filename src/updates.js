@@ -1,20 +1,18 @@
 // ------------ CheckBoxes ------------------>
-import { retrieveLocal, savingOnLocal } from "./index.js";
+import { retrieveLocal, savingOnLocal } from './store.js';
 
 export default function checkBoxes() {
   const checkboxes = document.querySelectorAll('input[type=checkbox]');
 
   checkboxes.forEach((checkbox) => {
     checkbox.addEventListener('change', (e) => {
-      let index = parseInt(e.target.parentElement.parentElement.id, 10);
-      let local = retrieveLocal();
+      const index = parseInt(e.target.parentElement.parentElement.id, 10);
+      const local = retrieveLocal();
 
       if (e.target.checked) {
-        // console.log('Checkbox is checked..');
         e.target.setAttribute('checked', true);
         local[index].completed = true;
       } else {
-        // console.log('Checkbox is not checked..');
         e.target.removeAttribute('checked');
         local[index].completed = false;
       }
