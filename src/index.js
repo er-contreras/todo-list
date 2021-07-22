@@ -1,14 +1,17 @@
 import './style.css';
-import dragAndDrop from './drag.js';
 import checkBoxes from './updates.js';
+import { dragAndDrop } from './drag.js';
 
 const placeholder = document.querySelector('#placeholder');
-const listcontainer = document.createElement('div');
+const listContainer = document.createElement('div');
 const clearAll = document.createElement('button');
 
-listcontainer.id = 'listContainer';
+listContainer.id = 'list-container';
 
-const arr = [
+placeholder.appendChild(listContainer);
+placeholder.appendChild(clearAll);
+
+const arrOfObjs = [
   {
     description: 'Wash the dishes',
     completed: true,
@@ -28,45 +31,70 @@ const arr = [
   },
 ];
 
-for (let i = 0; i < arr.length; i += 1) {
-  const dropZone = document.createElement('div');
-  const inputlabel = document.createElement('label');
-  const inputCheck = document.createElement('input');
-  const inputsLabelsContainer = document.createElement('div');
+function listElements() {
+  arrOfObjs.forEach((obj, i) => {
+    const dropZone = document.createElement('div');
+    const inputlabel = document.createElement('label');
+    const input = document.createElement('input');
+    const inputsLabelsContainer = document.createElement('div');
 
-  dropZone.className = 'dropZone';
-  clearAll.className = 'clearAll';
-  inputsLabelsContainer.className = 'inputsLabelsContainer';
+    dropZone.className = 'drop-zone';
+    clearAll.className = 'clear-all';
+    inputsLabelsContainer.className = 'inputs-labels-container';
 
-  dropZone.id = `draggable-${i}`;
-  inputCheck.id = `inputCheck-${i}`;
+    dropZone.id = `${i}`;
 
-  dropZone.setAttribute('draggable', 'true');
-  inputlabel.setAttribute('for', `inputCheck-${i}`);
-  inputCheck.setAttribute('type', 'checkbox');
+    dropZone.setAttribute('draggable', 'true');
+    input.setAttribute('type', 'checkbox');
+    input.classList.add('checkbox');
+    if (obj.completed) {
+      input.setAttribute('checked', true);
+    }
 
-  dropZone.innerHTML = '<span class="material-icons dots">more_vert</span>';
+    dropZone.innerHTML = '<span class="material-icons dots">more_vert</span>';
 
-  inputlabel.textContent = `${arr[i].description}`;
-  clearAll.textContent = 'Clear all completed';
+    inputlabel.textContent = `${obj.description}`;
+    clearAll.textContent = 'Clear all completed';
 
-  inputsLabelsContainer.appendChild(inputCheck);
-  inputsLabelsContainer.appendChild(inputlabel);
-  dropZone.appendChild(inputsLabelsContainer);
-  listcontainer.appendChild(dropZone);
+    inputsLabelsContainer.appendChild(input);
+    inputsLabelsContainer.appendChild(inputlabel);
+    dropZone.appendChild(inputsLabelsContainer);
+    listContainer.appendChild(dropZone);
+  });
 }
 
-placeholder.appendChild(listcontainer);
-placeholder.appendChild(clearAll);
-
-arr.forEach((item, i) => {
-  const inputsCheckbox = document.getElementById(`inputCheck-${i}`);
-
-  if (item.completed === true) {
-    inputsCheckbox.checked = true;
+export class Task {
+  constructor(description, completed, index) {
+    this.description = description;
+    this.completed = completed;
+    this.index = index;
   }
+}
+
+export function createObj() {
+  let arrayt = [];
+
+  arrOfObjs.forEach((obj) => {
+    let elem = new Task(obj.description, obj.completed, obj.index);
+
+    arrayt.push(elem)
+    savingOnLocal(arrayt)
+  });
+}
+
+export function savingOnLocal(arr) {
+  localStorage.setItem('tasks', JSON.stringify(arr));
+}
+
+export const retrieveLocal = () => {
+  return JSON.parse(localStorage.getItem('tasks'));
+}
+
+document.addEventListener('DOMContentLoaded', (e) => {
+
+  listElements();
+  dragAndDrop();
+  checkBoxes();
+  createObj()
+
 });
-
-dragAndDrop();
-
-checkBoxes();

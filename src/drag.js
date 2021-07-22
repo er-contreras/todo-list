@@ -1,59 +1,58 @@
-export default function dragAndDrop() {
-  const items = document.querySelectorAll('.dropZone');
+import { savingOnLocal, Task } from "./index.js";
+import checkBoxes from "./updates.js";
 
-  document.addEventListener('DOMContentLoaded', () => {
-    let dragSrcEl;
 
-    function handleDragStart(e) {
-      this.style.opacity = '0.4';
-      dragSrcEl = this;
+let dragSrcEl;
 
-      e.dataTransfer.effectAllowed = 'move';
-      e.dataTransfer.setData('text/html', this.innerHTML);
-    }
+const htmlLocalData = () => {
+  let arr = [];
 
-    function handleDragEnd() {
-      this.style.opacity = '1';
+  let listContainer = [...document.querySelector('#list-container').children];
 
-      items.forEach((item) => {
-        item.classList.remove('over');
-      });
-    }
-
-    function handleDragOver(e) {
-      if (e.preventDefault) {
-        e.preventDefault();
-      }
-
-      return false;
-    }
-
-    function handleDragEnter() {
-      this.classList.add('over');
-    }
-
-    function handleDragLeave() {
-      this.classList.remove('over');
-    }
-
-    function handleDrop(e) {
-      e.stopPropagation();
-
-      if (dragSrcEl !== this) {
-        dragSrcEl.innerHTML = this.innerHTML;
-        this.innerHTML = e.dataTransfer.getData('text/html');
-      }
-
-      return false;
-    }
-
-    items.forEach((item) => {
-      item.addEventListener('dragstart', handleDragStart, false);
-      item.addEventListener('dragover', handleDragOver, false);
-      item.addEventListener('dragenter', handleDragEnter, false);
-      item.addEventListener('dragleave', handleDragLeave, false);
-      item.addEventListener('dragend', handleDragEnd, false);
-      item.addEventListener('drop', handleDrop, false);
-    });
+  listContainer.forEach((items, i) => {
+    let inputsContainer = items.querySelector('.inputs-labels-container');
+    let checkbox = inputsContainer.querySelector('.checkbox');
+    let newTask = new Task(inputsContainer.textContent, checkbox.checked, i);
+    arr.push(newTask);
   });
+
+  savingOnLocal(arr);
+}
+
+const handleDragStart = (e) => {
+  e.currentTarget.style.opacity = '0.4';
+  dragSrcEl = e.currentTarget;
+
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/html', e.currentTarget.innerHTML);
+}
+
+const handleDragOver = (e) => {
+  if (e.preventDefault) {
+    e.preventDefault();
+  }
+}
+
+const handleDrop = (e) => {
+  e.stopPropagation();
+  dragSrcEl.style.opacity = '1';
+
+  if (dragSrcEl !== e.currentTarget) {
+    dragSrcEl.innerHTML = e.currentTarget.innerHTML;
+    e.currentTarget.innerHTML = e.dataTransfer.getData('text/html');
+  }
+
+  htmlLocalData();
+  checkBoxes();
+}
+
+export const dragAndDrop = () => {
+  const items = document.querySelectorAll('.drop-zone');
+
+  items.forEach((item) => {
+    item.addEventListener('dragstart', handleDragStart, false);
+    item.addEventListener('dragover', handleDragOver, false);
+    item.addEventListener('drop', handleDrop, false);
+  });
+
 }

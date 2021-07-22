@@ -23,7 +23,7 @@ body {
 .sync,
 .return,
 .listContainer,
-.dropZone {
+.drop-zone {
   display: flex;
 }
 
@@ -47,7 +47,7 @@ body {
   cursor: pointer;
 }
 
-.dropZone span {
+.drop-zone span {
   color: gray;
   cursor: move;
 }
@@ -70,15 +70,15 @@ body {
   font-size: 2rem;
 }
 
-#listContainer {
+#list-container {
   flex-direction: column;
 }
 
-.inputsCheck {
+.inputs-check {
   width: 10rem;
 }
 
-.dropZone {
+.drop-zone {
   flex-direction: row-reverse;
   justify-content: space-between;
   align-items: center;
@@ -89,12 +89,12 @@ body {
   height: 6rem;
 }
 
-.dropZone input,
-.dropZone label {
+.drop-zone input,
+.drop-zone label {
   margin: 1rem 1rem 1rem 0;
 }
 
-.clearAll {
+.clear-all {
   min-width: 100%;
   height: 6rem;
   border: none;
