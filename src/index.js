@@ -1,14 +1,19 @@
 import './style.css';
-import dragAndDrop from './drag.js';
 import checkBoxes from './updates.js';
+import dragAndDrop from './drag.js';
+import Task from './task.js';
+import { savingOnLocal, retrieveLocal } from './store.js';
 
 const placeholder = document.querySelector('#placeholder');
-const listcontainer = document.createElement('div');
+const listContainer = document.createElement('div');
 const clearAll = document.createElement('button');
 
-listcontainer.id = 'listContainer';
+listContainer.id = 'list-container';
 
-const arr = [
+placeholder.appendChild(listContainer);
+placeholder.appendChild(clearAll);
+
+const arrOfObjs = [
   {
     description: 'Wash the dishes',
     completed: true,
@@ -28,45 +33,86 @@ const arr = [
   },
 ];
 
-for (let i = 0; i < arr.length; i += 1) {
-  const dropZone = document.createElement('div');
-  const inputlabel = document.createElement('label');
-  const inputCheck = document.createElement('input');
-  const inputsLabelsContainer = document.createElement('div');
+if (window.localStorage.length == null || window.localStorage.length === 0) {
+  arrOfObjs.forEach((obj, i) => {
+    const dropZone = document.createElement('div');
+    const inputlabel = document.createElement('label');
+    const input = document.createElement('input');
+    const inputsLabelsContainer = document.createElement('div');
 
-  dropZone.className = 'dropZone';
-  clearAll.className = 'clearAll';
-  inputsLabelsContainer.className = 'inputsLabelsContainer';
+    dropZone.className = 'drop-zone';
+    clearAll.className = 'clear-all';
+    inputsLabelsContainer.className = 'inputs-labels-container';
 
-  dropZone.id = `draggable-${i}`;
-  inputCheck.id = `inputCheck-${i}`;
+    dropZone.id = `${i}`;
 
-  dropZone.setAttribute('draggable', 'true');
-  inputlabel.setAttribute('for', `inputCheck-${i}`);
-  inputCheck.setAttribute('type', 'checkbox');
+    dropZone.setAttribute('draggable', 'true');
+    input.setAttribute('type', 'checkbox');
+    input.classList.add('checkbox');
+    if (obj.completed) {
+      input.setAttribute('checked', true);
+    }
 
-  dropZone.innerHTML = '<span class="material-icons dots">more_vert</span>';
+    dropZone.innerHTML = '<span class="material-icons dots">more_vert</span>';
 
-  inputlabel.textContent = `${arr[i].description}`;
-  clearAll.textContent = 'Clear all completed';
+    inputlabel.textContent = `${obj.description}`;
+    clearAll.textContent = 'Clear all completed';
 
-  inputsLabelsContainer.appendChild(inputCheck);
-  inputsLabelsContainer.appendChild(inputlabel);
-  dropZone.appendChild(inputsLabelsContainer);
-  listcontainer.appendChild(dropZone);
+    inputsLabelsContainer.appendChild(input);
+    inputsLabelsContainer.appendChild(inputlabel);
+    dropZone.appendChild(inputsLabelsContainer);
+    listContainer.appendChild(dropZone);
+  });
+} else {
+  const obj = JSON.parse(localStorage.getItem('tasks'));
+  obj.forEach((obj, i) => {
+    const dropZone = document.createElement('div');
+    const inputlabel = document.createElement('label');
+    const input = document.createElement('input');
+    const inputsLabelsContainer = document.createElement('div');
+
+    dropZone.className = 'drop-zone';
+    clearAll.className = 'clear-all';
+    inputsLabelsContainer.className = 'inputs-labels-container';
+
+    dropZone.id = `${i}`;
+
+    dropZone.setAttribute('draggable', 'true');
+    input.setAttribute('type', 'checkbox');
+    input.classList.add('checkbox');
+    if (obj.completed) {
+      input.setAttribute('checked', true);
+    }
+
+    dropZone.innerHTML = '<span class="material-icons dots">more_vert</span>';
+
+    inputlabel.textContent = `${obj.description}`;
+    clearAll.textContent = 'Clear all completed';
+
+    inputsLabelsContainer.appendChild(input);
+    inputsLabelsContainer.appendChild(inputlabel);
+    dropZone.appendChild(inputsLabelsContainer);
+    listContainer.appendChild(dropZone);
+  });
 }
 
-placeholder.appendChild(listcontainer);
-placeholder.appendChild(clearAll);
+function createObj() {
+  const arrayt = [];
 
-arr.forEach((item, i) => {
-  const inputsCheckbox = document.getElementById(`inputCheck-${i}`);
+  arrOfObjs.forEach((obj) => {
+    const elem = new Task(obj.description, obj.completed, obj.index);
 
-  if (item.completed === true) {
-    inputsCheckbox.checked = true;
+    arrayt.push(elem);
+    savingOnLocal(arrayt);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  dragAndDrop();
+  checkBoxes();
+  if (window.localStorage.length == null) {
+    createObj();
+  } else {
+    retrieveLocal();
   }
 });
-
-dragAndDrop();
-
-checkBoxes();
