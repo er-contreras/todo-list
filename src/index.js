@@ -16,7 +16,7 @@ placeholder.appendChild(clearAll);
 const arrOfObjs = [
   {
     description: 'Wash the dishes',
-    completed: true,
+    completed: false,
     index: 0,
   },
 
@@ -33,66 +33,44 @@ const arrOfObjs = [
   },
 ];
 
+function render(obj, i) {
+  const dropZone = document.createElement('div');
+  const inputlabel = document.createElement('label');
+  const input = document.createElement('input');
+  const inputsLabelsContainer = document.createElement('div');
+
+  dropZone.className = 'drop-zone';
+  clearAll.className = 'clear-all';
+  inputsLabelsContainer.className = 'inputs-labels-container';
+
+  dropZone.id = `${i}`;
+
+  dropZone.setAttribute('draggable', 'true');
+  input.setAttribute('type', 'checkbox');
+  input.classList.add('checkbox');
+  if (obj.completed) {
+    input.setAttribute('checked', true);
+  }
+
+  dropZone.innerHTML = '<span class="material-icons dots">more_vert</span>';
+
+  inputlabel.textContent = `${obj.description}`;
+  clearAll.textContent = 'Clear all completed';
+
+  inputsLabelsContainer.appendChild(input);
+  inputsLabelsContainer.appendChild(inputlabel);
+  dropZone.appendChild(inputsLabelsContainer);
+  listContainer.appendChild(dropZone);
+}
+
 if (window.localStorage.length == null || window.localStorage.length === 0) {
   arrOfObjs.forEach((obj, i) => {
-    const dropZone = document.createElement('div');
-    const inputlabel = document.createElement('label');
-    const input = document.createElement('input');
-    const inputsLabelsContainer = document.createElement('div');
-
-    dropZone.className = 'drop-zone';
-    clearAll.className = 'clear-all';
-    inputsLabelsContainer.className = 'inputs-labels-container';
-
-    dropZone.id = `${i}`;
-
-    dropZone.setAttribute('draggable', 'true');
-    input.setAttribute('type', 'checkbox');
-    input.classList.add('checkbox');
-    if (obj.completed) {
-      input.setAttribute('checked', true);
-    }
-
-    dropZone.innerHTML = '<span class="material-icons dots">more_vert</span>';
-
-    inputlabel.textContent = `${obj.description}`;
-    clearAll.textContent = 'Clear all completed';
-
-    inputsLabelsContainer.appendChild(input);
-    inputsLabelsContainer.appendChild(inputlabel);
-    dropZone.appendChild(inputsLabelsContainer);
-    listContainer.appendChild(dropZone);
+    render(obj, i);
   });
 } else {
   const obj = JSON.parse(localStorage.getItem('tasks'));
   obj.forEach((obj, i) => {
-    const dropZone = document.createElement('div');
-    const inputlabel = document.createElement('label');
-    const input = document.createElement('input');
-    const inputsLabelsContainer = document.createElement('div');
-
-    dropZone.className = 'drop-zone';
-    clearAll.className = 'clear-all';
-    inputsLabelsContainer.className = 'inputs-labels-container';
-
-    dropZone.id = `${i}`;
-
-    dropZone.setAttribute('draggable', 'true');
-    input.setAttribute('type', 'checkbox');
-    input.classList.add('checkbox');
-    if (obj.completed) {
-      input.setAttribute('checked', true);
-    }
-
-    dropZone.innerHTML = '<span class="material-icons dots">more_vert</span>';
-
-    inputlabel.textContent = `${obj.description}`;
-    clearAll.textContent = 'Clear all completed';
-
-    inputsLabelsContainer.appendChild(input);
-    inputsLabelsContainer.appendChild(inputlabel);
-    dropZone.appendChild(inputsLabelsContainer);
-    listContainer.appendChild(dropZone);
+    render(obj, i);
   });
 }
 
