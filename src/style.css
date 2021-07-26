@@ -62,7 +62,7 @@ body {
   height: 6rem;
 }
 
-#addList {
+#add-to-list {
   width: 100%;
   height: 100%;
   border: none;
@@ -104,4 +104,9 @@ body {
 
 .dragging {
   opacity: 0.5;
+}
+
+.complete {
+  text-decoration: line-through;
+  color: rgb(158, 158, 158);
 }

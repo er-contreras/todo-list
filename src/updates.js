@@ -12,9 +12,11 @@ export default function checkBoxes() {
       if (e.target.checked) {
         e.target.setAttribute('checked', true);
         local[index].completed = true;
+        e.target.nextElementSibling.classList.add('complete');
       } else {
         e.target.removeAttribute('checked');
         local[index].completed = false;
+        e.target.nextElementSibling.classList.remove('complete');
       }
 
       savingOnLocal(local);
