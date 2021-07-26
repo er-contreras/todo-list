@@ -10,7 +10,7 @@ Mobile Screenshoot
 
 ## Link of Web Page
 
-- GitHub Pages: [@eri8-9](https://eri8-9.github.io/to-do-list/)
+- GitHub Pages: [@eri8-9](https://eri8-9.github.io/todo-list/)
 
 ## Built With
 
