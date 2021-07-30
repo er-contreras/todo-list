@@ -61,9 +61,23 @@ function removeItem(e) {
 }
 
 export function updateListenerIcons() {
-  const remove = document.querySelectorAll('.remove');
+  const removers = document.querySelectorAll('.remove');
 
-  remove.forEach((icon) => {
-    icon.addEventListener('click', (e) => removeItem(e));
+  removers.forEach((remover) => {
+    remover.addEventListener('click', (e) => {
+      removeItem(e);
+      location.reload();
+    })
   });
+}
+
+export function clickDots() {
+  const dots = document.querySelectorAll('.dots');
+
+  dots.forEach((dot) => {
+    dot.addEventListener('click', (e) => {
+        e.target.innerHTML = '';
+        e.target.previousElementSibling.style.display = 'inherit';
+    })
+  })
 }

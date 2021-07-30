@@ -3,9 +3,7 @@ import checkBoxes from './updates.js';
 import dragAndDrop from './drag.js';
 import createObj from './render.js';
 import addTask from './add.js';
-import {
-  removeAll, removeCompleteTask, updateListenerIcons,
-} from './remove.js';
+import { clickDots, removeAll, removeCompleteTask, updateListenerIcons } from './remove.js';
 import editDescription from './edit.js';
 
 const enter = document.getElementById('returnBtn');
@@ -23,6 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
   updateListenerIcons();
 
   editDescription();
+
+  clickDots();
+  
 });
 
 enter.addEventListener('click', () => {
@@ -34,9 +35,7 @@ clearAll.addEventListener('click', () => {
 });
 
 userInput.addEventListener('keyup', (e) => {
-  if (e.keyCode === 13) {
-    addTask();
-  }
+  e.keyCode === 13 ? addTask() : false;
 });
 
 removeAllIcon.addEventListener('click', () => {

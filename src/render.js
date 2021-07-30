@@ -22,7 +22,7 @@ function render(obj, i) {
     input.setAttribute('checked', true);
   }
 
-  dropZone.innerHTML = '<span class="material-icons remove"> delete_forever </span>';
+  dropZone.innerHTML = '<span class="material-icons remove removers"> delete_forever </span> <span class="material-icons dots"> more_vert </span>';
 
   inputlabel.textContent = `${obj.description}`;
   inputlabel.setAttribute('contenteditable', 'true');
@@ -40,11 +40,9 @@ export default function createObj() {
   const arrayt = [];
   let local;
 
-  if (window.localStorage.length == null || window.localStorage.length === 0) {
-    local = arrOfObjs;
-  } else {
-    local = retrieveLocal();
-  }
+  window.localStorage.length == null || window.localStorage.length === 0
+    ? local = arrOfObjs 
+    : local = retrieveLocal();
 
   listContainer.innerHTML = '';
 

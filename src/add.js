@@ -8,7 +8,6 @@ import checkBoxes from './updates.js';
 
 export default function addTask() {
   const userInput = document.getElementById('add-to-list');
-
   const local = retrieveLocal();
   const userObj = new Task(userInput.value, false, local.length);
 
@@ -27,4 +26,6 @@ export default function addTask() {
   updateListenerIcons();
 
   editDescription();
+
+  location.reload()
 }

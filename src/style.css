@@ -110,3 +110,12 @@ body {
   text-decoration: line-through;
   color: rgb(158, 158, 158);
 }
+
+.remove {
+  display: none;
+  border-radius: 50%;
+}
+
+.remove:hover {
+  background-color: hsl(106, 100%, 50%);
+}
