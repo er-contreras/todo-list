@@ -15,6 +15,7 @@ Mobile Screenshoot
 ## Built With
 
 - HTML, CSS & JS
+- Webpack, jest & babel
 
 ## Skills
 
@@ -26,9 +27,11 @@ Mobile Screenshoot
 
 ### Prerequisites
   - Read about [webpack](https://webpack.js.org/guides/getting-started/) before start.
+  - Read about [AAA](https://medium.com/@pjbgf/title-testing-code-ocd-and-the-aaa-pattern-df453975ab80).
 
 ### Setup
   - Better have [VS Code](https://code.visualstudio.com/) installed or install the source-code editor of your preference. 
+    - Take a look at this guidelines [jest](https://github.com/microverseinc/curriculum-transversal-skills/blob/main/testing/lesson_unit_tests_in_javascript.md)
 ### Install
   - In the terminal go to the folder you going to work and write the next. 
   ```
